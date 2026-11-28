@@ -41,3 +41,87 @@ Here I will be documenting daily experiments and learning on the project
 | Testing (20%) | 6,855 | Jun 4 – Jun 27 |
 
 **Outcome:** Successfully completed environment setup and initial METR-LA exploration. Ready to move towards spatial analysis and traffic forecasting.
+# Day 2 — Forecasting Baselines, Road Network & SUMO
+
+## 1. Forecasting Baselines
+
+Implemented and evaluated two baseline forecasting methods on METR-LA.
+
+### Historical Average
+- Calculated average speed for each sensor based on day of week and time of day.
+- Used historical averages to predict future traffic speeds.
+
+### Persistence Baseline
+- Used the current observed speed to predict future speeds.
+- Evaluated at 15, 30 and 60-minute horizons.
+
+### Results
+
+| Model | MAE (mph) | RMSE (mph) |
+|---|---:|---:|
+| Historical Average | 7.1025 | 9.8237 |
+| Persistence — 15 min | 3.4583 | 6.3070 |
+| Persistence — 30 min | 4.1454 | 7.9166 |
+| Persistence — 60 min | 5.3077 | 10.2236 |
+
+### Observations
+- Persistence performed best at the 15-minute horizon.
+- Prediction errors increased as the forecasting horizon increased.
+- Historical Average had a better RMSE than Persistence at the 60-minute horizon.
+- These baselines will serve as reference points for future ML models.
+
+## 2. Road Network Extraction using OSMnx
+
+- Installed OSMnx and NetworkX.
+- Downloaded a 500-metre road network around Koramangala, Bengaluru.
+- Extracted a graph containing 245 nodes and 580 edges.
+- Visualised the road network.
+- Inspected road attributes such as length and highway type.
+
+### Road Statistics
+- Average road segment length: 63.57 metres
+- Longest road segment: 245.43 metres
+- Shortest road segment: 4.82 metres
+
+Learned that OSMnx represents road networks using NetworkX graph structures.
+
+## 3. SUMO Installation and First Simulation
+
+- Installed SUMO 1.28.0 on Windows.
+- Configured the SUMO `bin` directory in the User PATH environment variable.
+- Verified access to `sumo` and `sumo-gui`.
+- Learned the basics of SUMO XML configuration files.
+
+### Created a simple simulation
+- `network.nod.xml` — defined two junctions.
+- `network.edg.xml` — defined one directed road.
+- `network.net.xml` — generated the network using `netconvert`.
+- `routes.rou.xml` — defined a car type, route and vehicle.
+- `simulation.sumocfg` — configured the simulation.
+
+### Simulation Results
+Successfully ran a 100-second simulation.
+
+- Vehicles inserted: 1
+- Vehicles running at the end: 0
+- Vehicles waiting at the end: 0
+- Simulation completed successfully.
+
+## 4. Key Learnings
+
+- Understood MAE and RMSE evaluation for forecasting.
+- Learned how OSMnx and NetworkX represent road networks.
+- Understood XML structure and its role in SUMO.
+- Learned how to generate a SUMO network using `netconvert`.
+- Successfully executed a basic traffic simulation.
+
+## 5. Pending / Next Steps
+
+- Improve the visualisation of the SUMO simulation and verify vehicle movement.
+- Explore more realistic road networks and traffic demand.
+- Continue developing forecasting models.
+- Begin connecting traffic forecasting with incident-response logic.
+
+## Day 2 Status
+
+Completed forecasting baselines, initial road network extraction, and SUMO installation with a successful first simulation.
